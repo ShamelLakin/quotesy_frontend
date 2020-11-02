@@ -14,7 +14,6 @@ function getQuotes() {
          <h2>${quotz.attributes.quote}</h2>
          <h3>${quotz.attributes.author}</h3>
          <p>${quotz.attributes.category.name}</p>
-         <p>${quotz.attributes.tag}</p>
          <button data-id=${quotz.id}>edit</button>
          </div>`;
 
