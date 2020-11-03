@@ -29,8 +29,31 @@ function getQuotes() {
 
 function createFormHandler(e) {
    e.preventDefault()
-   const authorValue = document.querySelector("#input-author").value
+   
    const quotesValue = document.querySelector("#input-quote").value
-   const categoryValue = document.querySelector('#categories').value
+   const authorValue = document.querySelector("#input-author").value
+   const categoryId = parseInt(document.querySelector('#categories').value)
+   postFetch(quotesValue, authorValue, categoryId)
+}
 
+function postFetch(quote, author, category_id) {
+   const bodyData = {quote, author, category_id}
+   fetch(endPoint, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(bodyData)
+   })
+   .then(response => response.json())
+   .then(quotes_response => {
+      const quotseyData = quotes_response.data
+      const quoteMark = `
+         <div data-id=${quotes_response.id}>
+         <h2>${quotz.attributes.quote}</h2>
+         <h3>${quotz.attributes.author}</h3>
+         <p>${quotz.attributes.category.name}</p>
+         <button data-id=${quotz.id}>edit</button>
+         </div>`;
+
+         document.querySelector('#quotz-container').innerHTML += quoteMark 
+   })
 }
