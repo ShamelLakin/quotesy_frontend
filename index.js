@@ -2,6 +2,11 @@ const endPoint = 'http://localhost:3000/api/v1/quotes'
 
 document.addEventListener('DOMContentLoaded', () => {
    getQuotes()
+
+   const createQuoteForm = document.querySelector("#create-quotz-form")
+
+   createQuoteForm.addEventListener("submit", (e) =>
+   createFormHandler(e))
 })
 
 function getQuotes() {
@@ -20,4 +25,12 @@ function getQuotes() {
          document.querySelector('#quotz-container').innerHTML += quoteMark 
       })
    })
+}
+
+function createFormHandler(e) {
+   e.preventDefault()
+   const authorValue = document.querySelector("#input-author").value
+   const quotesValue = document.querySelector("#input-quote").value
+   const categoryValue = document.querySelector('#categories').value
+
 }
