@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getQuotes() {
    fetch(endPoint)
-   .then(response => response.json())
-   .then(quotes_resp => {
+    .then(response => response.json())
+    .then(quotes_resp => {
       quotes_resp.data.forEach(quotz => {
          const quoteMark = `
          <div data-id=${quotz.id}>
@@ -37,23 +37,35 @@ function createFormHandler(e) {
 }
 
 function postFetch(quote, author, category_id) {
+    // console.log(quote, author, category_id);
    const bodyData = {quote, author, category_id}
-   fetch(endPoint, {
+   const nestBodyData = {
+       quote: bodyData
+
+   }
+// debugger
+    fetch(endPoint, {
+
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(bodyData)
-   })
+      body: JSON.stringify(nestBodyData)
+    })
    .then(response => response.json())
-   .then(quotes_response => {
-      const quotseyData = quotes_response.data
+   .then(quote => {
+      console.log(quote);
+      const quoteData = quote.data
+     
       const quoteMark = `
-         <div data-id=${quotes_response.id}>
-         <h2>${quotz.attributes.quote}</h2>
-         <h3>${quotz.attributes.author}</h3>
-         <p>${quotz.attributes.category.name}</p>
-         <button data-id=${quotz.id}>edit</button>
-         </div>`;
+      <div data-id=${quote.id}>
+      <h2>${quoteData.attributes.quote}</h2>
+      <h3>${quoteData.attributes.author}</h3>
+      <p>${quoteData.attributes.category.name}</p>
+      <button data-id=${quoteData.id}>edit</button>
+      </div>
+      <br><br>`;
 
-         document.querySelector('#quotz-container').innerHTML += quoteMark 
+      document.querySelector('#quotz-container').innerHTML += quoteMark;
    })
 }
+
+
