@@ -21,7 +21,8 @@ function getQuotes() {
          <p>${quotz.attributes.category.name}</p>
          <button data-id=${quotz.id}>edit</button>
          </div>`;
-
+// debugger
+         let newQuote = new Quote(quotz, quotz.attributes)
          document.querySelector('#quotz-container').innerHTML += quoteMark 
       })
    })
