@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
    createQuoteForm.addEventListener("submit", (e) =>
    createFormHandler(e))
+
+   const quotzContainer = document.querySelector('#quotz-container')
+   quotzContainer.addEventListener('click', e => {
+    const id = parseInt(e.target.dataset.id);
+    debugger
+    const quote = Quote.findById(id);
+    
+    document.querySelector('#update-quote').innerHTML = quote.renderUpdateForm();
+    console.log('quote');
+  });
+  document.querySelector('#update-quote').addEventListener('submit', e => updateFormHandler(e))
 })
 
 function getQuotes() {
@@ -24,6 +35,7 @@ function getQuotes() {
 // debugger
          let newQuote = new Quote(quotz, quotz.attributes)
          document.querySelector('#quotz-container').innerHTML += quoteMark 
+         
       })
    })
 }
@@ -36,6 +48,16 @@ function createFormHandler(e) {
    const categoryId = parseInt(document.querySelector('#categories').value)
    postFetch(quotesValue, authorValue, categoryId)
 }
+
+function updateFormHandler(e) {
+    e.preventDefault();
+    const id = parseInt(e.target.dataset.id);
+    const quotz = Quote.findById(id);
+    const quote = e.target.querySelector('#input-quote').value;
+    const author= e.target.querySelector('#input-author').value;
+    const category_id = parseInt(e.target.querySelector('#categories').value);
+    patchQuote(quote, author, category_id)
+  }
 
 function postFetch(quote, author, category_id) {
     // console.log(quote, author, category_id);
@@ -67,6 +89,22 @@ function postFetch(quote, author, category_id) {
 
       document.querySelector('#quotz-container').innerHTML += quoteMark;
    })
+
+    function patchQuote( quote, author, category_id) {
+        const bodyJSON = { quote, author, category_id }
+            fetch(`http://localhost:3000/api/v1/quotes/${quote.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+            },
+                body: JSON.stringify(bodyJSON)
+            })
+            .then(res => res.json())
+            // our backend responds with the updated syllabus instance represented as JSON
+            .then(updatedNote => console.log(updatedNote));
+    }
+  
 }
 
 
