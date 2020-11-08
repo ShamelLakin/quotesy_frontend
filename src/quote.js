@@ -18,7 +18,7 @@ class Quote {
           <input id='input-quote' type="text" name="title" value="${this.quote}" class="input-text">
           <br><br>
     
-          <label>DAuthor</label>
+          <label>Author</label>
           <textarea id='input-author' name="description" rows="8" cols="80" value="">${this.author}</textarea>
           <br><br>
     

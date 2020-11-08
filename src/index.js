@@ -2,13 +2,14 @@ const endPoint = 'http://localhost:3000/api/v1/quotes'
 
 document.addEventListener('DOMContentLoaded', () => {
    getQuotes()
-
+  
    const createQuoteForm = document.querySelector("#create-quotz-form")
 
    createQuoteForm.addEventListener("submit", (e) =>
    createFormHandler(e))
 
    const quotzContainer = document.querySelector('#quotz-container')
+
    quotzContainer.addEventListener('click', e => {
     const quotes = document.querySelectorAll(".quote")
     Array.from(quotes).forEach(quote => {
@@ -23,11 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quoteInput.value = quoteContent
       }
     })
-    // debugger
-    // const quote = Quote.findById(id);
-    
-    // document.querySelector('#update-quote').innerHTML = quote.renderUpdateForm();
-    // console.log('quote');
+   
   });
   document.querySelector('#update-quote').addEventListener('submit', e => updateFormHandler(e))
 })
@@ -116,9 +113,15 @@ function postFetch(quote, author, category_id) {
             })
             .then(res => res.json())
             // our backend responds with the updated quote instance represented as JSON
-            .then(updatedQuote => console.log(updatedQuote));
-    }
+            .then(quote => {
+              const newQuote = new Quote(quote.data.id, quote.data.attributes)
+              document.querySelector('#quotz-container').innerHTML += newQuote.renderUpdateForm();
+              
+
+            }
+            )}
   //  patchQuote();
 }
 
 
+// console.log(updatedQuote));
