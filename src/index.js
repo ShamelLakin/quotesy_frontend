@@ -10,12 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
    const quotzContainer = document.querySelector('#quotz-container')
    quotzContainer.addEventListener('click', e => {
-    const id = parseInt(e.target.dataset.id);
-    debugger
-    const quote = Quote.findById(id);
+    const quotes = document.querySelectorAll(".quote")
+    Array.from(quotes).forEach(quote => {
+      let authorInput = document.querySelector('input#input-author')
+      let quoteInput = document.querySelector('textarea#input-quote')
+      let categories = document.querySelector('select#categories')
+      let selectedCategory = categories[categories.selectedIndex].textContent
+      if (e.target === quote) {
+        let authorContent = quote.querySelector('h3').textContent
+        authorInput.value = authorContent
+        let quoteContent = quote.querySelector('h2').textContent
+        quoteInput.value = quoteContent
+      }
+    })
+    // debugger
+    // const quote = Quote.findById(id);
     
-    document.querySelector('#update-quote').innerHTML = quote.renderUpdateForm();
-    console.log('quote');
+    // document.querySelector('#update-quote').innerHTML = quote.renderUpdateForm();
+    // console.log('quote');
   });
   document.querySelector('#update-quote').addEventListener('submit', e => updateFormHandler(e))
 })
@@ -26,7 +38,7 @@ function getQuotes() {
     .then(quotes_resp => {
       quotes_resp.data.forEach(quotz => {
          const quoteMark = `
-         <div data-id=${quotz.id}>
+         <div data-id=${quotz.id} class="quote">
          <h2>${quotz.attributes.quote}</h2>
          <h3>${quotz.attributes.author}</h3>
          <p>${quotz.attributes.category.name}</p>
@@ -46,6 +58,7 @@ function createFormHandler(e) {
    const quotesValue = document.querySelector("#input-quote").value
    const authorValue = document.querySelector("#input-author").value
    const categoryId = parseInt(document.querySelector('#categories').value)
+  //  debugger
    postFetch(quotesValue, authorValue, categoryId)
 }
 
@@ -56,6 +69,7 @@ function updateFormHandler(e) {
     const quote = e.target.querySelector('#input-quote').value;
     const author= e.target.querySelector('#input-author').value;
     const category_id = parseInt(e.target.querySelector('#categories').value);
+    // debugger
     patchQuote(quote, author, category_id)
   }
 
@@ -90,7 +104,7 @@ function postFetch(quote, author, category_id) {
       document.querySelector('#quotz-container').innerHTML += quoteMark;
    })
 
-    function patchQuote( quote, author, category_id) {
+    function patchQuote(quote, author, category_id) {
         const bodyJSON = { quote, author, category_id }
             fetch(`http://localhost:3000/api/v1/quotes/${quote.id}`, {
                 method: 'PATCH',
@@ -101,10 +115,10 @@ function postFetch(quote, author, category_id) {
                 body: JSON.stringify(bodyJSON)
             })
             .then(res => res.json())
-            // our backend responds with the updated syllabus instance represented as JSON
-            .then(updatedNote => console.log(updatedNote));
+            // our backend responds with the updated quote instance represented as JSON
+            .then(updatedQuote => console.log(updatedQuote));
     }
-  
+  //  patchQuote();
 }
 
 

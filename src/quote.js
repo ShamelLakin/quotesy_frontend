@@ -34,7 +34,7 @@ class Quote {
           </select>
           <br><br>
     
-          <input id='edit-button' type="submit" name="submit" value="Edit Syllabus" class="submit">
+          <input id='edit-button' type="submit" name="submit" value="Edit Quote" class="submit">
         </form>
     
       `;
