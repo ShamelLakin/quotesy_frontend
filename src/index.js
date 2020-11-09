@@ -26,24 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
     })
    
   });
-  document.querySelector('#update-quote').addEventListener('submit', e => updateFormHandler(e))
+  // document.querySelector('#update-quote').addEventListener('submit', e => updateFormHandler(e))
 })
 
 function getQuotes() {
    fetch(endPoint)
     .then(response => response.json())
     .then(quotes_resp => {
-      quotes_resp.data.forEach(quotz => {
-         const quoteMark = `
-         <div data-id=${quotz.id} class="quote">
-         <h2>${quotz.attributes.quote}</h2>
-         <h3>${quotz.attributes.author}</h3>
-         <p>${quotz.attributes.category.name}</p>
-         <button data-id=${quotz.id}>edit</button>
-         </div>`;
+      quotes_resp.data.forEach(quote => {
+        //  const quoteMark = `
+        //  <div data-id=${quotz.id} class="quote">
+        //  <h2>${quotz.attributes.quote}</h2>
+        //  <h3>${quotz.attributes.author}</h3>
+        //  <p>${quotz.attributes.category.name}</p>
+        //  <button data-id=${quotz.id}>edit</button>
+        //  </div>`;
 // debugger
-         let newQuote = new Quote(quotz, quotz.attributes)
-         document.querySelector('#quotz-container').innerHTML += quoteMark 
+         let newQuote = new Quote(quote, quote.attributes)
+         document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard() 
          
       })
    })
@@ -55,7 +55,6 @@ function createFormHandler(e) {
    const quotesValue = document.querySelector("#input-quote").value
    const authorValue = document.querySelector("#input-author").value
    const categoryId = parseInt(document.querySelector('#categories').value)
-  //  debugger
    postFetch(quotesValue, authorValue, categoryId)
 }
 
@@ -71,13 +70,12 @@ function updateFormHandler(e) {
   }
 
 function postFetch(quote, author, category_id) {
-    // console.log(quote, author, category_id);
    const bodyData = {quote, author, category_id}
    const nestBodyData = {
        quote: bodyData
 
    }
-// debugger
+
     fetch(endPoint, {
 
       method: "POST",
@@ -89,16 +87,17 @@ function postFetch(quote, author, category_id) {
       console.log(quote);
       const quoteData = quote.data
      
-      const quoteMark = `
-      <div data-id=${quote.id}>
-      <h2>${quoteData.attributes.quote}</h2>
-      <h3>${quoteData.attributes.author}</h3>
-      <p>${quoteData.attributes.category.name}</p>
-      <button data-id=${quoteData.id}>edit</button>
-      </div>
-      <br><br>`;
+      // const quoteMark = `
+      // <div data-id=${quote.id}>
+      // <h2>${quoteData.attributes.quote}</h2>
+      // <h3>${quoteData.attributes.author}</h3>
+      // <p>${quoteData.attributes.category.name}</p>
+      // <button data-id=${quoteData.id}>edit</button>
+      // </div>
+      // <br><br>`;
+      let newQuote = new Quote(quoteData, quoteData.attributes)
 
-      document.querySelector('#quotz-container').innerHTML += quoteMark;
+      document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard();
    })
 
     function patchQuote(quote, author, category_id) {
@@ -120,8 +119,7 @@ function postFetch(quote, author, category_id) {
 
             }
             )}
-  //  patchQuote();
+  
 }
 
 
-// console.log(updatedQuote));
