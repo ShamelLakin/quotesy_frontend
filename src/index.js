@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
    const quotzContainer = document.querySelector('#quotz-container')
 
    quotzContainer.addEventListener('click', e => {
+
     const quotes = document.querySelectorAll(".quote")
+    
     Array.from(quotes).forEach(quote => {
       let authorInput = document.querySelector('input#input-author')
       let quoteInput = document.querySelector('textarea#input-quote')

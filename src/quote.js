@@ -11,17 +11,17 @@ class Quote {
 
     renderQuoteCard() {
       return ` 
-        <div class="col-md-4">
+      <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
-        <img src="https://lh3.googleusercontent.com/Tbkfng6PQEWhNoONNZqRYLeuPom4eU1w9pGB2PPD8eG-ImS26RiuN69SlnPCiC0BKqFRGqcJPtjpT3qFGXawK-CxRf5n9sGuTk9gXHSk6prIFspfTuqhKBiASFNMckzUy68xfV7CU1g=w2400" class="card-img-top" alt="...">
-          <div class="card-body">
-          <h5 class="card-title">${this.author}</h5>
-            <p class="card-text">${this.quote}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
+          <img src="https://lh3.googleusercontent.com/Tbkfng6PQEWhNoONNZqRYLeuPom4eU1w9pGB2PPD8eG-ImS26RiuN69SlnPCiC0BKqFRGqcJPtjpT3qFGXawK-CxRf5n9sGuTk9gXHSk6prIFspfTuqhKBiASFNMckzUy68xfV7CU1g=w2400" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${this.author}</h5>
+              <p class="card-text">${this.quote}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div>
               <small class="text-muted">Made With <3</small>
             </div>
           </div>
