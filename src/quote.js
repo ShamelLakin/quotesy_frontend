@@ -13,7 +13,7 @@ class Quote {
       return ` 
         <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
-        <img src="https://images.unsplash.com/photo-1537210249814-b9a10a161ae4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" class="card-img-top" alt="...">
+        <img src="https://lh3.googleusercontent.com/Tbkfng6PQEWhNoONNZqRYLeuPom4eU1w9pGB2PPD8eG-ImS26RiuN69SlnPCiC0BKqFRGqcJPtjpT3qFGXawK-CxRf5n9sGuTk9gXHSk6prIFspfTuqhKBiASFNMckzUy68xfV7CU1g=w2400" class="card-img-top" alt="...">
           <div class="card-body">
           <h5 class="card-title">${this.author}</h5>
             <p class="card-text">${this.quote}</p>
