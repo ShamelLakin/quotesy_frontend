@@ -68,7 +68,7 @@ function updateFormHandler(e) {
     const author= e.target.querySelector('#input-author').value;
     const category_id = parseInt(e.target.querySelector('#categories').value);
     // debugger
-    patchQuote(quote, author, category_id)
+    Quote(quote, author, category_id)
   }
 
 function postFetch(quote, author, category_id) {
@@ -102,10 +102,10 @@ function postFetch(quote, author, category_id) {
       document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard();
    })
 
-    function patchQuote(quote, author, category_id) {
+    function deleteQuote(quote, author, category_id) {
         const bodyJSON = { quote, author, category_id }
             fetch(`http://localhost:3000/api/v1/quotes/${quote.id}`, {
-                method: 'PATCH',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
