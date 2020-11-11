@@ -27,6 +27,7 @@ class Quote {
           </div>
         </div>
       </div>`
+      
       //   return `
     
       //   <form data-id=${this.id} >

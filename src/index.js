@@ -2,7 +2,7 @@ const endPoint = 'http://localhost:3000/api/v1/quotes'
 
 document.addEventListener('DOMContentLoaded', () => {
    getQuotes()
-  
+   
    const createQuoteForm = document.querySelector("#create-quotz-form")
 
    createQuoteForm.addEventListener("submit", (e) =>
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         authorInput.value = authorContent
         let quoteContent = quote.querySelector('h2').textContent
         quoteInput.value = quoteContent
+        
       }
     })
    
@@ -68,7 +69,7 @@ function updateFormHandler(e) {
     const author= e.target.querySelector('#input-author').value;
     const category_id = parseInt(e.target.querySelector('#categories').value);
     // debugger
-    Quote(quote, author, category_id)
+    patchQuote(quote, author, category_id)
   }
 
 function postFetch(quote, author, category_id) {
@@ -102,26 +103,24 @@ function postFetch(quote, author, category_id) {
       document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard();
    })
 
-    function deleteQuote(quote, author, category_id) {
-        const bodyJSON = { quote, author, category_id }
-            fetch(`http://localhost:3000/api/v1/quotes/${quote.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-            },
-                body: JSON.stringify(bodyJSON)
-            })
-            .then(res => res.json())
-            // our backend responds with the updated quote instance represented as JSON
-            .then(quote => {
-              const newQuote = new Quote(quote.data.id, quote.data.attributes)
-              document.querySelector('#quotz-container').innerHTML += newQuote.renderUpdateForm();
-              
+    
+      
+         // Method itself
+        
+        // No need to have body, because we don't send nothing to the server.
+      function deleteQuote() {
+       // Make the HTTP Delete call using fetch api
+      fetch('http://localhost:3000/api/v1/${quotes.id}', {
+       method: "delete",
+      }) 
+      .then((response) => response.json())
+       .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+       .catch(err => console.log(err)) 
 
-            }
-            )}
-  
+      }
+      
 }
+
+
 
 
