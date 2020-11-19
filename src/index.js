@@ -49,7 +49,12 @@ function getQuotes() {
          document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard() 
          
       })
+      const deleteButtons = document.querySelectorAll(".delete") 
+      // debugger
+      deleteButtons.forEach(element => element.addEventListener("click", deleteQuote));
+// debugger
    })
+
 }
 
 function createFormHandler(e) {
@@ -108,19 +113,20 @@ function postFetch(quote, author, category_id) {
          // Method itself
         
         // No need to have body, because we don't send nothing to the server.
-      function deleteQuote() {
-       // Make the HTTP Delete call using fetch api
-      fetch('http://localhost:3000/api/v1/${quotes.id}', {
-       method: "delete",
-      }) 
-      .then((response) => response.json())
-       .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
-       .catch(err => console.log(err)) 
-
-      }
       
 }
 
+function deleteQuote() {
+  // debugger
+//  Make the HTTP Delete call using fetch api
+fetch(`http://localhost:3000/api/v1/${quotes.id}`, {
+ method: "delete",
+}) 
+.then((response) => response.json())
+ .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+ .catch(err => console.log(err)) 
+
+}
 
 
 

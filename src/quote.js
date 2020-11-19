@@ -19,7 +19,7 @@ class Quote {
               <p class="card-text">${this.quote}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary delete">Delete</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                 </div>
               <small class="text-muted">Made With <3</small>
