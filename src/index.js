@@ -1,35 +1,16 @@
 const endPoint = 'http://localhost:3000/api/v1/quotes'
 
 document.addEventListener('DOMContentLoaded', () => {
-   getQuotes()
-   
-   const createQuoteForm = document.querySelector("#create-quotz-form")
+  getQuotes()
+  
+  const createQuoteForm = document.querySelector("#create-quotz-form")
 
-   createQuoteForm.addEventListener("submit", (e) =>
-   createFormHandler(e))
+  createQuoteForm.addEventListener("submit", (e) =>
+  createFormHandler(e))
 
-   const quotzContainer = document.querySelector('#quotz-container')
-
-   quotzContainer.addEventListener('click', e => {
-
-    const quotes = document.querySelectorAll(".quote")
-    
-    Array.from(quotes).forEach(quote => {
-      let authorInput = document.querySelector('input#input-author')
-      let quoteInput = document.querySelector('textarea#input-quote')
-      let categories = document.querySelector('select#categories')
-      let selectedCategory = categories[categories.selectedIndex].textContent
-      if (e.target === quote) {
-        let authorContent = quote.querySelector('h3').textContent
-        authorInput.value = authorContent
-        let quoteContent = quote.querySelector('h2').textContent
-        quoteInput.value = quoteContent
-        
-      }
-    })
-   
-  });
-  // document.querySelector('#update-quote').addEventListener('submit', e => updateFormHandler(e))
+  setTimeout(() => {
+    handleDeleteQuote()
+  }, 1000)
 })
 
 function getQuotes() {
@@ -37,21 +18,10 @@ function getQuotes() {
     .then(response => response.json())
     .then(quotes_resp => {
       quotes_resp.data.forEach(quote => {
-        //  const quoteMark = `
-        //  <div data-id=${quotz.id} class="quote">
-        //  <h2>${quotz.attributes.quote}</h2>
-        //  <h3>${quotz.attributes.author}</h3>
-        //  <p>${quotz.attributes.category.name}</p>
-        //  <button data-id=${quotz.id}>edit</button>
-        //  </div>`;
-// debugger
          let newQuote = new Quote(quote, quote.attributes)
-         document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard() 
-         
+         newQuote.buildQuoteCard()
       })
-      const deleteButtons = document.querySelectorAll(".delete") 
-      // debugger
-      deleteButtons.forEach(element => element.addEventListener("click", deleteQuote));
+      
 // debugger
    })
 
@@ -66,66 +36,42 @@ function createFormHandler(e) {
    postFetch(quotesValue, authorValue, categoryId)
 }
 
-function updateFormHandler(e) {
-    e.preventDefault();
-    const id = parseInt(e.target.dataset.id);
-    const quotz = Quote.findById(id);
-    const quote = e.target.querySelector('#input-quote').value;
-    const author= e.target.querySelector('#input-author').value;
-    const category_id = parseInt(e.target.querySelector('#categories').value);
-    // debugger
-    patchQuote(quote, author, category_id)
-  }
-
 function postFetch(quote, author, category_id) {
-   const bodyData = {quote, author, category_id}
-   const nestBodyData = {
-       quote: bodyData
-
-   }
-
-    fetch(endPoint, {
-
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(nestBodyData)
-    })
-   .then(response => response.json())
-   .then(quote => {
-      console.log(quote);
-      const quoteData = quote.data
-     
-      // const quoteMark = `
-      // <div data-id=${quote.id}>
-      // <h2>${quoteData.attributes.quote}</h2>
-      // <h3>${quoteData.attributes.author}</h3>
-      // <p>${quoteData.attributes.category.name}</p>
-      // <button data-id=${quoteData.id}>edit</button>
-      // </div>
-      // <br><br>`;
-      let newQuote = new Quote(quoteData, quoteData.attributes)
-
-      document.querySelector('#quotz-container').innerHTML += newQuote.renderQuoteCard();
-   })
-
-    
-      
-         // Method itself
-        
-        // No need to have body, because we don't send nothing to the server.
-      
+  const bodyData = {quote, author, category_id}
+  const nestBodyData = {
+    quote: bodyData
+  }
+  fetch(endPoint, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(nestBodyData)
+  })
+  .then(response => response.json())
+  .then(quote => {
+    console.log(quote);
+    const quoteData = quote.data
+    let newQuote = new Quote(quoteData, quoteData.attributes)
+    newQuote.buildQuoteCard()
+  })
 }
 
-function deleteQuote() {
-  // debugger
-//  Make the HTTP Delete call using fetch api
-fetch(`http://localhost:3000/api/v1/${quotes.id}`, {
- method: "delete",
-}) 
-.then((response) => response.json())
- .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
- .catch(err => console.log(err)) 
+const handleDeleteQuote = () => {
+  // Make the HTTP Delete call using fetch api
+  const quoteCardDeleteBtns = document.querySelectorAll(".quote_card button.delete")
+  Array.from(quoteCardDeleteBtns).forEach(button => button.addEventListener("click", event => {
+    fetch(`http://localhost:3000/api/v1/quotes/${event.target.dataset.quoteId}`, {
+      method: "DELETE",
+    }) 
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+    })
+    // Manipulate the data retrieved back, if we want to do something with it
+    .catch(err => console.log(err)) 
 
+    let quoteCard = event.target.parentElement.parentElement.parentElement.parentElement.parentElement
+    quoteCard.remove()
+  }));
 }
 
 
