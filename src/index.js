@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   createQuoteForm.addEventListener("submit", (e) =>
   createFormHandler(e))
 
-  setTimeout(() => {
-    handleDeleteQuote()
-  }, 1000)
+  // setTimeout(() => {
+    // handleDeleteQuote()
+  // }, 1000)
 })
 
 function getQuotes() {
@@ -21,8 +21,7 @@ function getQuotes() {
          let newQuote = new Quote(quote, quote.attributes)
          newQuote.buildQuoteCard()
       })
-      
-// debugger
+      handleDeleteQuote()
    })
 
 }
@@ -33,6 +32,8 @@ function createFormHandler(e) {
    const quotesValue = document.querySelector("#input-quote").value
    const authorValue = document.querySelector("#input-author").value
    const categoryId = parseInt(document.querySelector('#categories').value)
+   const createQuoteForm = document.querySelector("#create-quotz-form")
+   createQuoteForm.reset()
    postFetch(quotesValue, authorValue, categoryId)
 }
 
@@ -58,6 +59,7 @@ function postFetch(quote, author, category_id) {
 const handleDeleteQuote = () => {
   // Make the HTTP Delete call using fetch api
   const quoteCardDeleteBtns = document.querySelectorAll(".quote_card button.delete")
+  // debugger
   Array.from(quoteCardDeleteBtns).forEach(button => button.addEventListener("click", event => {
     fetch(`http://localhost:3000/api/v1/quotes/${event.target.dataset.quoteId}`, {
       method: "DELETE",
