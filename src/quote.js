@@ -24,13 +24,13 @@ class Quote {
       const cardBody = document.createElement('div')
       cardBody.classList.add('card-body')
 
-      const h5 = document.createElement('h5')
-      h5.classList.add('card-title')
-      h5.textContent = this.author
-
       const p = document.createElement('p')
-      p.classList.add('card-text')
-      p.textContent = this.quote
+      p.classList.add('card-title')
+      p.textContent = this.author
+
+      const h5 = document.createElement('h5')
+      h5.classList.add('card-text')
+      h5.textContent = this.quote
 
       const buttonWrapper = document.createElement('div')
       buttonWrapper.classList.add('d-flex', 'justify-content-between', 'align-items-center')
@@ -54,6 +54,33 @@ class Quote {
       quoteCard.append(card)
       quotesCont.prepend(quoteCard)
     }
+
+    appendQuoteCard = () => {
+      const quotesCont = document.querySelector('.card-header')
+      const quoteCard = document.createElement('div')
+      quoteCard.classList.add('quote_card')
+
+      const card = document.createElement('div')
+      card.classList.add('card')
+
+      const cardBody = document.createElement('div')
+      cardBody.classList.add('card-body')
+
+      const h5 = document.createElement('h5')
+      h5.classList.add('card-title')
+      h5.textContent = this.author
+
+      const p = document.createElement('p')
+      p.classList.add('card-text')
+      p.textContent = this.quote
+
+      cardBody.append(h5, p)
+      card.append(cardBody)
+      quoteCard.append(card)
+      quotesCont.prepend(quoteCard)
+
+    }
+    
 }
 
 Quote.all = [];
